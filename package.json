@@ -1,0 +1,15 @@
+{
+  "name": "md-express-server",
+  "version": "1.0.0",
+  "description": "Testing Deployment on Vercel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mudassar Hussain Ansari",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
