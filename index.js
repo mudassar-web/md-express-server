@@ -7,7 +7,7 @@ const app = express();
 
 // Create GET request
 app.get("/", (req, res) => {
-  res.send("MD-Express-Server Running on Vercel");
+  res.send("MD-Express-Server Running");
 });
 
 // health checkup call
