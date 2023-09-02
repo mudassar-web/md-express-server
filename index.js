@@ -1,9 +1,19 @@
 // Add Express
 const express = require("express");
+const mongoose = require('mongoose');
+const cors = require('cors')
+const usersModel = require('./models/users')
 const PORT = process.env.PORT || 4000
 
 // Initialize Express
 const app = express();
+
+//configure app
+app.use(cors())
+app.use(express.json()) // for parsing application/json
+
+//connecting to mongodb
+mongoose.connect('mongodb://localhost:27017/mdnotes', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Create GET request
 app.get("/", (req, res) => {
@@ -18,6 +28,39 @@ app.get('/health', (_req, res) => {
     date: new Date()
   }
   res.status(200).send(data)
+})
+
+//create user in mongodb
+app.post('/register', async (req, res) => {
+  try {
+      let user = await usersModel.findOne({ 'uname': req.body.uname }, 'uname')
+      if (user) {
+          res.status(401).send('User already exists.');
+      }
+      else {
+          const u1 = new usersModel({ uname: req.body.uname, pwd: req.body.pwd });
+          let result = await u1.save()
+          res.send(res.json(result))
+      }
+  }
+  catch (error) {
+      res.status(401).send('Registration Failed!!!!' + error)
+  }
+})
+
+app.post('/login', async (req, res) => {
+  try {
+      let user = await usersModel.findOne({ 'uname': req.body.uname, 'pwd': req.body.pwd })
+      if (user) {
+          res.status(200).send(res.json(user))
+      }
+      else {
+          res.status(401).send('Invalid Creds.')
+      }
+  }
+  catch (error) {
+      res.status(401).send('Login Failed!!!!' + error)
+  }
 })
 
 // Initialize server
