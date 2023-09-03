@@ -1,3 +1,3 @@
 const mongoose = require('mongoose');
 
-module.exports = mongoose.model('users', { uname: String, pwd: String });
+module.exports = mongoose.model('users', { fname: String, lname: String });

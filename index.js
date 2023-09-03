@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json()) // for parsing application/json
 
 //connecting to mongodb
-mongoose.connect('mongodb://bitmongo:27017/mdnotes', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://bitmongo:27017/mdusers', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Create GET request
 app.get("/", (req, res) => {
@@ -33,12 +33,12 @@ app.get('/health', (_req, res) => {
 //create user in mongodb
 app.post('/create', async (req, res) => {
   try {
-      let user = await usersModel.findOne({ 'uname': req.body.uname }, 'uname')
+      let user = await usersModel.findOne({ 'fname': req.body.uname }, 'fname')
       if (user) {
           res.status(401).send('User already exists.');
       }
       else {
-          const u1 = new usersModel({ uname: req.body.uname, pwd: req.body.pwd });
+          const u1 = new usersModel({ fname: req.body.uname, lname: req.body.lname });
           let result = await u1.save()
           res.send(result)
       }
@@ -51,7 +51,7 @@ app.post('/create', async (req, res) => {
 //read user in mongodb
 app.post('/retrieve', async (req, res) => {
   try {
-      let user = await usersModel.findOne({ 'uname': req.body.uname, 'pwd': req.body.pwd })
+      let user = await usersModel.findOne({ 'fname': req.body.uname, 'lname': req.body.lname })
       if (user) {
           res.status(200).send(user)
       }
