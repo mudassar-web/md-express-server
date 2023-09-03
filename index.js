@@ -13,7 +13,7 @@ app.use(cors())
 app.use(express.json()) // for parsing application/json
 
 //connecting to mongodb
-mongoose.connect('mongodb://localhost:27017/mdnotes', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://bitmongo:27017/mdnotes', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Create GET request
 app.get("/", (req, res) => {
