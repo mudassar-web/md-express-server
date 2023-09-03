@@ -33,12 +33,12 @@ app.get('/health', (_req, res) => {
 //create user in mongodb
 app.post('/create', async (req, res) => {
   try {
-      let user = await usersModel.findOne({ 'fname': req.body.uname }, 'fname')
+      let user = await usersModel.findOne({ 'fname': req.body.fname }, 'fname')
       if (user) {
           res.status(401).send('User already exists.');
       }
       else {
-          const u1 = new usersModel({ fname: req.body.uname, lname: req.body.lname });
+          const u1 = new usersModel({ fname: req.body.fname, lname: req.body.lname });
           let result = await u1.save()
           res.send(result)
       }
@@ -51,7 +51,7 @@ app.post('/create', async (req, res) => {
 //read user in mongodb
 app.post('/retrieve', async (req, res) => {
   try {
-      let user = await usersModel.findOne({ 'fname': req.body.uname, 'lname': req.body.lname })
+      let user = await usersModel.findOne({ 'fname': req.body.fname, 'lname': req.body.lname })
       if (user) {
           res.status(200).send(user)
       }
