@@ -31,7 +31,7 @@ app.get('/health', (_req, res) => {
 })
 
 //create user in mongodb
-app.post('/register', async (req, res) => {
+app.post('/create', async (req, res) => {
   try {
       let user = await usersModel.findOne({ 'uname': req.body.uname }, 'uname')
       if (user) {
@@ -40,26 +40,27 @@ app.post('/register', async (req, res) => {
       else {
           const u1 = new usersModel({ uname: req.body.uname, pwd: req.body.pwd });
           let result = await u1.save()
-          res.send(res.json(result))
+          res.send(result)
       }
   }
   catch (error) {
-      res.status(401).send('Registration Failed!!!!' + error)
+      res.status(401).send('User Creation Failed!!!!' + error)
   }
 })
 
-app.post('/login', async (req, res) => {
+//read user in mongodb
+app.post('/retrieve', async (req, res) => {
   try {
       let user = await usersModel.findOne({ 'uname': req.body.uname, 'pwd': req.body.pwd })
       if (user) {
-          res.status(200).send(res.json(user))
+          res.status(200).send(user)
       }
       else {
           res.status(401).send('Invalid Creds.')
       }
   }
   catch (error) {
-      res.status(401).send('Login Failed!!!!' + error)
+      res.status(401).send('User Retrieval Failed!!!!' + error)
   }
 })
 
