@@ -10,7 +10,13 @@ Testing Deployment on Vercel
 ```
 Containerize an application
 
+Create Dockerfile from terminal
+
 type nul > Dockerfile
+
+---------------------------------------------------
+                Dockerfile
+---------------------------------------------------
 
 Add the below instructions in Dockerfile
 
@@ -21,24 +27,40 @@ RUN npm install
 CMD [ "npm","start"]
 EXPOSE 4000
 
-docker build -t md-express-server .
+---------------------------------------------------
+                docker-compose.yml
+---------------------------------------------------
 
--t(tag)
+Add the below instructions in Dockerfile
 
-docker run -dp 4000:4000 md-express-server
+version: '3.9'
+services:
+  server:
+    build: .
+    ports:
+      - "4000:4000"
+    links:
+      - bitmongo
+  bitmongo:
+    image: 'bitnami/mongodb'
+    ports:
+      - "27017:27017"
 
--d(detach) to runs the container in the background.
--p(publish) creates a port mapping between the host and the container.
+---------------------------------------------------
+                docker command
+---------------------------------------------------
+
+docker images
 
 docker ps
 
-docker logs <container-id>
+docker compose up
 
-docker stop <container-id>
+docker compose up -d
 
-docker rm <container-id>
+-d(detach)  to runs the container in the background.
 
-docker image rm md-express-server
+docker compose down
 
 ```
 
